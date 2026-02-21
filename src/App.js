@@ -22,11 +22,18 @@ function App() {
   const [showSaveModal, setShowSaveModal] = useState(false);
   const [showLoadModal, setShowLoadModal] = useState(false);
 
-  // Autosave players and headerTitle to localStorage whenever they change
+  // Victory/target score (0 = none)
+  const [targetScore, setTargetScore] = useState(() => {
+    const saved = localStorage.getItem('scoreboard_targetScore');
+    return saved ? Number(saved) : 0;
+  });
+
+  // Autosave players, headerTitle and targetScore to localStorage whenever they change
   useEffect(() => {
     localStorage.setItem('scoreboard_players', JSON.stringify(players));
     localStorage.setItem('scoreboard_headerTitle', headerTitle);
-  }, [players, headerTitle]);
+    localStorage.setItem('scoreboard_targetScore', String(targetScore));
+  }, [players, headerTitle, targetScore]);
 
   const addPlayer = () => {
     const newPlayer = {
@@ -68,9 +75,11 @@ function App() {
     // Clear localStorage
     localStorage.removeItem('scoreboard_players');
     localStorage.removeItem('scoreboard_headerTitle');
+    localStorage.removeItem('scoreboard_targetScore');
     // Reset state to defaults
     setPlayers([{ id: Date.now(), name: "Player 1", score: 0, avatarId: 1 }]);
     setHeaderTitle("Enter Title Here");
+    setTargetScore(0);
   };
 
   // Save current board as template (with scores reset to 0)
@@ -81,7 +90,8 @@ function App() {
       id: Date.now(),
       name: templateName,
       title: headerTitle,
-      players: playersWithZeroScores
+      players: playersWithZeroScores,
+      targetScore: targetScore
     };
     templates.push(newTemplate);
     localStorage.setItem('scoreboard_templates', JSON.stringify(templates));
@@ -95,7 +105,8 @@ function App() {
       id: Date.now(),
       name: gameName,
       title: headerTitle,
-      players: players
+      players: players,
+      targetScore: targetScore
     };
     saves.push(newSave);
     localStorage.setItem('scoreboard_saves', JSON.stringify(saves));
@@ -109,6 +120,7 @@ function App() {
     if (template) {
       setHeaderTitle(template.title);
       setPlayers(template.players);
+      if (typeof template.targetScore !== 'undefined') setTargetScore(Number(template.targetScore));
       setShowLoadModal(false);
     }
   };
@@ -120,6 +132,7 @@ function App() {
     if (save) {
       setHeaderTitle(save.title);
       setPlayers(save.players);
+      if (typeof save.targetScore !== 'undefined') setTargetScore(Number(save.targetScore));
       setShowLoadModal(false);
     }
   };
@@ -149,6 +162,8 @@ function App() {
       <Header 
         headerTitle={headerTitle}
         onHeaderTitleChange={setHeaderTitle}
+        targetScore={targetScore}
+        setTargetScore={setTargetScore}
         onResetScores={resetAllScores}
         onResetGame={resetGame}
         onOpenSaveModal={() => setShowSaveModal(true)}
@@ -162,6 +177,7 @@ function App() {
           onUpdateScore={updatePlayerScore}
           onUpdateName={updatePlayerName}
           onUpdateAvatar={updatePlayerAvatar}
+          targetScore={targetScore}
         />
       </main>
       

@@ -44,6 +44,21 @@ body {
   padding: 0 10px;
 }
 
+/* Target input mimics the title input but is smaller and centered */
+.header-target-input {
+  text-align: center;
+  background: #1a1a1a;
+  border: none;
+  border-bottom: 2px solid #61dafb;
+  color: white;
+  font-size: 1rem;
+  font-weight: 600;
+  outline: none;
+  padding: 4px 8px;
+  width: 140px;
+  margin: 4px 0;
+}
+
 .App-header .menu-container {
   margin-left: auto;
 }
@@ -359,4 +374,15 @@ body {
 .avatar-grid::-webkit-scrollbar-thumb {
   background: #555;
   border-radius: 4px;
+}
+
+/* Winner styling: glowing gold border and subtle gold shadow */
+.playerCard.winner {
+  border-color: #ffd700;
+  box-shadow: 0 8px 30px rgba(255, 215, 0, 0.12), 0 4px 14px rgba(0,0,0,0.5);
+  transform: translateY(-6px) scale(1.02);
+}
+
+.playerCard.winner .player-name {
+  color: #ffeaa7; /* soft gold text */
 }

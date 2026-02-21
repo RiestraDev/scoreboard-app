@@ -4,6 +4,7 @@ import HeaderMenu from "./HeaderMenu";
 
 const Header = (props) => {
     const [isEditing, setIsEditing] = useState(false);
+    const [isEditingTarget, setIsEditingTarget] = useState(false);
 
     const handleTitleChange = (newTitle) => {
         props.onHeaderTitleChange(newTitle);
@@ -29,10 +30,29 @@ const Header = (props) => {
                     autoFocus
                 />
             ) : (
-                <h1>{props.headerTitle}</h1>
+                <h1 onClick={() => setIsEditing(true)} style={{ margin: 0, cursor: 'text' }}>{props.headerTitle}</h1>
+            )}
+            {isEditingTarget ? (
+                <input
+                    className="header-target-input"
+                    type="number"
+                    value={props.targetScore}
+                    onChange={(e) => props.setTargetScore(Number(e.target.value))}
+                    onKeyDown={(e) => {
+                        if (e.key === "Enter") setIsEditingTarget(false);
+                        if (e.key === "Escape") setIsEditingTarget(false);
+                    }}
+                    onBlur={() => setIsEditingTarget(false)}
+                    autoFocus
+                />
+            ) : (
+                <h4 onClick={() => setIsEditingTarget(true)} style={{ margin: 0, opacity: 0.85, cursor: 'text' }}>
+                    Target Score: {props.targetScore > 0 ? props.targetScore : 'None'}
+                </h4>
             )}
             <HeaderMenu 
                 onEditTitle={() => setIsEditing(true)} 
+                onEditTarget={() => setIsEditingTarget(true)}
                 onResetScores={props.onResetScores} 
                 onResetGame={props.onResetGame}
                 onOpenSaveModal={props.onOpenSaveModal}

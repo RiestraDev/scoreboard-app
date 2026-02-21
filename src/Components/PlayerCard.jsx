@@ -3,7 +3,7 @@ import Button from './Button';
 import PlayerCardMenu from './PlayerCardMenu';
 import AvatarPicker from './AvatarPicker';
 
-const PlayerCard = ({ id, name, initialScore = 0, avatarId = 1, onDelete, onScoreChange, onNameChange, onAvatarChange }) => {
+const PlayerCard = ({ id, name, initialScore = 0, avatarId = 1, onDelete, onScoreChange, onNameChange, onAvatarChange, targetScore = 0 }) => {
     const [score, setScore] = useState(initialScore);
     const [isEditing, setIsEditing] = useState(false);
     const [playerName, setPlayerName] = useState(name);
@@ -28,8 +28,10 @@ const PlayerCard = ({ id, name, initialScore = 0, avatarId = 1, onDelete, onScor
 
     const iconNumbers = Array.from({ length: 18 }, (_, i) => i + 1);
 
+    const isWinner = targetScore > 0 && score >= targetScore;
+
     return (
-        <div className="playerCard">
+        <div className={"playerCard" + (isWinner ? " winner" : "") }>
             {isPickingAvatar ? (
                 /* THE AVATAR PICKER UI */
                 <AvatarPicker
@@ -73,7 +75,7 @@ const PlayerCard = ({ id, name, initialScore = 0, avatarId = 1, onDelete, onScor
                                         autoFocus
                                     />
                                 ) : (
-                                    <h2 className="player-name">{playerName}</h2>
+                                    <h2 className="player-name">{playerName} {isWinner ? <span aria-hidden>👑</span> : null}</h2>
                                 )}
 
                                 <PlayerCardMenu
