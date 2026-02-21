@@ -51,6 +51,10 @@ const PlayerCard = ({ name, initialScore = 0, onDelete }) => {
                                     onKeyDown={(e) => {
                                         if (e.key === 'Enter') {
                                             handleFinishEditing();
+                                        } else if (e.key === 'Escape') {
+                                            setPlayerName(name); // Revert to the original name from props
+                                            setIsEditing(false);
+                                            setShowMenu(false);
                                         }
                                     }}
                                     onBlur={() => {
