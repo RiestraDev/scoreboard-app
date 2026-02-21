@@ -263,3 +263,68 @@ body {
   color: #666;
   margin-bottom: 10px;
 }
+
+
+/* Update the avatar placeholder to remove the old silhouette background */
+.avatar-placeholder {
+  width: 80px;
+  height: 80px;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border: 1px solid #444;
+}
+
+.current-avatar {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Ensures the image fills the box perfectly */
+}
+
+/* Avatar Picker Layout */
+.avatar-picker {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+}
+
+.avatar-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 columns of icons */
+  gap: 10px;
+  overflow-y: auto; /* Adds a scrollbar if the icons take up too much vertical space */
+  max-height: 200px;
+  margin-bottom: 15px;
+  padding-right: 5px; /* Tiny padding for the scrollbar */
+}
+
+.avatar-option {
+  width: 100%;
+  aspect-ratio: 1 / 1; /* Keeps them perfectly square */
+  border-radius: 8px;
+  cursor: pointer;
+  border: 2px solid transparent;
+  transition: border-color 0.2s, transform 0.1s;
+}
+
+.avatar-option:hover {
+  border-color: #61dafb; /* React blue highlight */
+  transform: scale(1.05);
+}
+
+/* Customizing the scrollbar for a dark theme look */
+.avatar-grid::-webkit-scrollbar {
+  width: 6px;
+}
+.avatar-grid::-webkit-scrollbar-track {
+  background: #1a1a1a;
+  border-radius: 4px;
+}
+.avatar-grid::-webkit-scrollbar-thumb {
+  background: #555;
+  border-radius: 4px;
+}

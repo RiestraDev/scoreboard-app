@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from "react";
 
-const PlayerCardMenu = ({ onDelete, onEditClick }) => {
+const PlayerCardMenu = ({ onDelete, onEditClick, onChangeAvatarClick }) => {
     const [showMenu, setShowMenu] = useState(false);
     const menuRef = useRef(null);
 
@@ -24,18 +24,9 @@ const PlayerCardMenu = ({ onDelete, onEditClick }) => {
 
             {showMenu && (
                 <div className="menu-dropdown">
-                    <button onClick={() => { 
-                        onDelete(); 
-                        setShowMenu(false); 
-                    }}>
-                        Delete Player
-                    </button>
-                    <button onClick={() => { 
-                        onEditClick(); 
-                        setShowMenu(false); 
-                    }}>
-                        Edit Name
-                    </button>
+                    <button onClick={() => { onDelete(); setShowMenu(false); }}>Delete Player</button>
+                    <button onClick={() => { onEditClick(); setShowMenu(false); }}>Edit Name</button>
+                    <button onClick={() => { onChangeAvatarClick(); setShowMenu(false); }}>Change Avatar</button>
                 </div>
             )}
         </div>
