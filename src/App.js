@@ -73,17 +73,32 @@ function App() {
     setHeaderTitle("Enter Title Here");
   };
 
-  // Save current board as template
+  // Save current board as template (with scores reset to 0)
   const saveTemplate = (templateName) => {
     const templates = JSON.parse(localStorage.getItem('scoreboard_templates') || '[]');
+    const playersWithZeroScores = players.map(player => ({ ...player, score: 0 }));
     const newTemplate = {
       id: Date.now(),
       name: templateName,
       title: headerTitle,
-      players: players
+      players: playersWithZeroScores
     };
     templates.push(newTemplate);
     localStorage.setItem('scoreboard_templates', JSON.stringify(templates));
+    setShowSaveModal(false);
+  };
+
+  // Save current game (with current scores)
+  const saveGame = (gameName) => {
+    const saves = JSON.parse(localStorage.getItem('scoreboard_saves') || '[]');
+    const newSave = {
+      id: Date.now(),
+      name: gameName,
+      title: headerTitle,
+      players: players
+    };
+    saves.push(newSave);
+    localStorage.setItem('scoreboard_saves', JSON.stringify(saves));
     setShowSaveModal(false);
   };
 
@@ -98,11 +113,32 @@ function App() {
     }
   };
 
+  // Load saved game
+  const loadGame = (gameId) => {
+    const saves = JSON.parse(localStorage.getItem('scoreboard_saves') || '[]');
+    const save = saves.find(s => s.id === gameId);
+    if (save) {
+      setHeaderTitle(save.title);
+      setPlayers(save.players);
+      setShowLoadModal(false);
+    }
+  };
+
   // Delete template
   const deleteTemplate = (templateId) => {
     const templates = JSON.parse(localStorage.getItem('scoreboard_templates') || '[]');
     const filtered = templates.filter(t => t.id !== templateId);
     localStorage.setItem('scoreboard_templates', JSON.stringify(filtered));
+    // Force re-render by creating new state
+    setShowLoadModal(false);
+    setTimeout(() => setShowLoadModal(true), 0);
+  };
+
+  // Delete saved game
+  const deleteGame = (gameId) => {
+    const saves = JSON.parse(localStorage.getItem('scoreboard_saves') || '[]');
+    const filtered = saves.filter(s => s.id !== gameId);
+    localStorage.setItem('scoreboard_saves', JSON.stringify(filtered));
     // Force re-render by creating new state
     setShowLoadModal(false);
     setTimeout(() => setShowLoadModal(true), 0);
@@ -135,8 +171,11 @@ function App() {
         onCloseSaveModal={() => setShowSaveModal(false)}
         onCloseLoadModal={() => setShowLoadModal(false)}
         onSaveTemplate={saveTemplate}
+        onSaveGame={saveGame}
         onLoadTemplate={loadTemplate}
+        onLoadGame={loadGame}
         onDeleteTemplate={deleteTemplate}
+        onDeleteGame={deleteGame}
       />
       {/* <Footer /> */}
     </div>
