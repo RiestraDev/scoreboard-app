@@ -1,27 +1,26 @@
+/* 1. Global Reset & Body */
+body {
+  margin: 0;
+  background-color: #121212; /* Deep dark background */
+  font-family: 'Segoe UI', Roboto, sans-serif;
+  color: white;
+}
+
 .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
   display: flex;
   flex-direction: column;
+  min-height: 100vh;
+}
+
+/* 3. Header Styling */
+.App-header {
+  height: 80px;
+  display: flex;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  background-color: #1a1a1a;
+  border-bottom: 2px solid #333;
+  margin: 0; /* Removed the default margin from h1 */
 }
 
 .App-link {
@@ -35,4 +34,216 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.playMat {
+  display: flex;
+  flex-flow: row wrap;      /* Shorthand for direction and wrap */
+  justify-content: center;  /* Centers the cards if the last row isn't full */
+  gap: 20px;                /* Slightly more breathing room */
+  padding: 40px;
+  max-width: 1400px;        /* Prevents cards from getting TOO wide on giant monitors */
+  margin: 0 auto;           /* Centers the whole mat on the screen */
+}
+
+.playerCard {
+  position: relative;
+  background-color: #2a2a2a; /* Slightly lighter than the background for depth */
+  border: 1px solid #383838;    /* Subtle border */
+  border-radius: 12px;
+  padding: 24px;
+
+  
+  /* The Magic Line: grow, shrink, and base width */
+  flex: 0 1 280px; 
+  /*max-width: 350px;          Prevents a single card from stretching across the whole screen */
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  
+  /* Visual Polish */
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4);
+  transition: transform 0.2s ease, box-shadow 0.2s ease; /* Smooth hover effect */
+}
+
+/* Hover effect to make it feel interactive */
+.playerCard:hover {
+  transform: translateY(-4px);
+  background-color: #2a2a2a;
+  border-color: #555;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.6);
+}
+
+/* Typography inside cards */
+.playerCard h2 {
+  /* margin: 0 0 10px 0; */
+  font-size: 1.5rem;
+}
+
+.playerCard p {
+  color: #aaa;
+  /* margin: 0; */
+  font-size: 0.9rem;
+}
+
+.player-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center; /* This vertically centers the name and the icon */
+  width: 100%;
+  margin-bottom: 8px;  /* Space between the name-row and the 'Score' label */
+}
+
+.menu-container {
+  position: relative; /* Change from absolute to relative */
+  /* This lets the ⋮ icon flow with the text, but keeps 
+     the dropdown anchored specifically to the icon */
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  padding: 0; /* Remove padding that might be pushing it up/down */
+  line-height: 1;
+  display: flex; /* Helps with internal vertical centering of the dots */
+  align-items: center;
+}
+
+.menu-dropdown {
+  position: absolute;
+  right: 0;
+  top: 100%; /* Appears directly below the ⋮ icon */
+  background-color: #333;
+  border: 1px solid #555;
+  border-radius: 8px;
+  z-index: 20;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.5);
+}
+
+.menu-dropdown button {
+  background: none;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: left;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.menu-dropdown button:hover {
+  background-color: #444;
+}
+
+.player-name {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin: 0; /* CRITICAL: Remove default browser margins */
+  line-height: 1; /* Ensures the text height matches its font size */
+}
+
+/* Container for Avatar and Score */
+.card-main {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 15px;
+  gap: 15px;
+}
+
+/* Silhouette Styling */
+.avatar-placeholder {
+  width: 80px;
+  height: 80px;
+  background-color: #444;
+  border-radius: 8px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  overflow: hidden;
+}
+
+.silhouette {
+  width: 40px;
+  height: 50px;
+  background-color: #121212;
+  border-radius: 20px 20px 0 0;
+}
+
+/* Score Styling */
+.score-display {
+  text-align: left;
+  flex-grow: 1;
+}
+
+.score-display .label {
+  font-size: 0.8rem;
+  color: #aaa;
+  text-transform: uppercase;
+}
+
+.score-display .score-value {
+  margin: 0;
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #fff;
+}
+
+/* Control Row Styling */
+.card-controls {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  gap: 8px;
+  margin-top: auto; /* Pushes buttons to the bottom */
+}
+
+
+/* Base Button Styles */
+.btn {
+  border: none;
+  border-radius: 8px;
+  padding: 10px 15px;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: opacity 0.2s, transform 0.1s;
+  flex: 1; /* This makes all buttons in a row the same width */
+}
+
+.btn:active {
+  transform: scale(0.95); /* Slight "squish" when clicked */
+}
+
+/* Variant Styles */
+.btn.default { background-color: #555; }
+.btn.danger  { background-color: #d32f2f; }
+.btn.success { background-color: #388e3c; }
+
+.btn:hover {
+  opacity: 0.9;
+}
+
+.add-card {
+  border: 2px dashed #444; /* Dashed border signals it's a placeholder */
+  background-color: transparent;
+  justify-content: center;
+  cursor: pointer;
+  opacity: 0.7;
+}
+
+.add-card:hover {
+  opacity: 1;
+  border-color: #666;
+  background-color: rgba(255, 255, 255, 0.05);
+}
+
+.plus-icon {
+  font-size: 4rem;
+  color: #666;
+  margin-bottom: 10px;
 }
