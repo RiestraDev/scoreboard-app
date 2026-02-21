@@ -17,6 +17,7 @@ const PlayerCard = ({ name, initialScore = 0, onDelete }) => {
                 <div className="score-display">
                     <div className="player-header">
                         <h2 className="player-name">{name}</h2>
+
                         <div className="menu-container">
                             <button className="menu-btn" onClick={() => setShowMenu(!showMenu)}>
                                 ⋮
@@ -29,6 +30,7 @@ const PlayerCard = ({ name, initialScore = 0, onDelete }) => {
                                 </div>
                             )}
                         </div>
+                        
                     </div>
 
                     <span className="label">Score</span>
