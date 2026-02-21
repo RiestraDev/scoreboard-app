@@ -95,6 +95,22 @@ body {
   margin-bottom: 8px;  /* Space between the name-row and the 'Score' label */
 }
 
+.player-header input {
+  background: #1a1a1a;
+  border: 1px solid #555;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 4px;
+  width: 100%;
+  padding: 2px 5px;
+  outline: none; /* Removes the default blue focus ring */
+}
+
+.player-header input:focus {
+  border-color: #61dafb; /* Optional: adds a nice React-blue glow while typing */
+}
+
 .menu-container {
   position: relative; /* Change from absolute to relative */
   /* This lets the ⋮ icon flow with the text, but keeps 
