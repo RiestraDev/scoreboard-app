@@ -1,26 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import PlayerCard from './PlayerCard';
 import AddPlayerCard from "./AddPlayerCard";
 
-const PlayMat = (props) => {
-
-    const [players, setPlayers] = useState([
-        { id: Date.now(), name: "Player 1", score: 0 }
-    ]);
-
-    const removePlayer = (id) => {
-        // Filter keeps every player EXCEPT the one with the matching id
-        setPlayers(players.filter(player => player.id !== id));
-    };
-
-    const addPlayer = () => {
-        const newPlayer = {
-            id: Date.now(), // Unique ID for the 'key' prop
-            name: `Player ${players.length + 1}`,
-            score: 0
-        };
-        setPlayers([...players, newPlayer]); // Add new player to the array
-    };
+const PlayMat = ({ players, onAddPlayer, onRemovePlayer, onUpdateScore }) => {
 
     return (
         <div className="playMat">
@@ -29,13 +11,15 @@ const PlayMat = (props) => {
             {players.map((player) => (
                 <PlayerCard
                     key={player.id}
+                    id={player.id}
                     name={player.name}
                     initialScore={player.score}
-                    onDelete={() => removePlayer(player.id)}
+                    onDelete={() => onRemovePlayer(player.id)}
+                    onScoreChange={(newScore) => onUpdateScore(player.id, newScore)}
                 />
             ))}
 
-            <AddPlayerCard onClick={addPlayer} />
+            <AddPlayerCard onClick={onAddPlayer} />
         </div>
     );
 };

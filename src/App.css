@@ -18,9 +18,34 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 20px;
   background-color: #1a1a1a;
   border-bottom: 2px solid #333;
-  margin: 0; /* Removed the default margin from h1 */
+  padding: 0 20px;
+  position: relative;
+}
+
+.App-header h1 {
+  margin: 0;
+  flex: 1;
+  text-align: center;
+}
+
+.header-title-input {
+  flex: 1;
+  text-align: center;
+  background: #1a1a1a;
+  border: none;
+  border-bottom: 2px solid #61dafb;
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  outline: none;
+  padding: 0 10px;
+}
+
+.App-header .menu-container {
+  margin-left: auto;
 }
 
 .App-link {

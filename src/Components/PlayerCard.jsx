@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Button from './Button';
 import PlayerCardMenu from './PlayerCardMenu';
 import AvatarPicker from './AvatarPicker';
 
-const PlayerCard = ({ name, initialScore = 0, onDelete }) => {
+const PlayerCard = ({ id, name, initialScore = 0, onDelete, onScoreChange }) => {
     const [score, setScore] = useState(initialScore);
     const [isEditing, setIsEditing] = useState(false);
     const [playerName, setPlayerName] = useState(name);
@@ -11,7 +11,17 @@ const PlayerCard = ({ name, initialScore = 0, onDelete }) => {
     const [avatarId, setAvatarId] = useState(1);
     const [isPickingAvatar, setIsPickingAvatar] = useState(false);
 
+    // Sync local score state when initialScore prop changes
+    useEffect(() => {
+        setScore(initialScore);
+    }, [initialScore]);
+
     const handleFinishEditing = () => setIsEditing(false);
+
+    const updateScore = (newScore) => {
+        setScore(newScore);
+        onScoreChange(newScore);
+    };
 
     const iconNumbers = Array.from({ length: 18 }, (_, i) => i + 1);
 
@@ -74,10 +84,10 @@ const PlayerCard = ({ name, initialScore = 0, onDelete }) => {
                     </div>
 
                     <div className="card-controls">
-                        <Button label="- 10" onClick={() => setScore(prev => prev - 10)} variant="danger" />
-                        <Button label="- 1" onClick={() => setScore(prev => prev - 1)} variant="danger" />
-                        <Button label="+ 1" onClick={() => setScore(prev => prev + 1)} variant="success" />
-                        <Button label="+ 10" onClick={() => setScore(prev => prev + 10)} variant="success" />
+                        <Button label="- 10" onClick={() => updateScore(score - 10)} variant="danger" />
+                        <Button label="- 1" onClick={() => updateScore(score - 1)} variant="danger" />
+                        <Button label="+ 1" onClick={() => updateScore(score + 1)} variant="success" />
+                        <Button label="+ 10" onClick={() => updateScore(score + 10)} variant="success" />
                     </div>
                 </>
             )}
