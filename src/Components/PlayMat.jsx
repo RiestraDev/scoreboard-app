@@ -2,7 +2,7 @@ import React from "react";
 import PlayerCard from './PlayerCard';
 import AddPlayerCard from "./AddPlayerCard";
 
-const PlayMat = ({ players, onAddPlayer, onRemovePlayer, onUpdateScore }) => {
+const PlayMat = ({ players, onAddPlayer, onRemovePlayer, onUpdateScore, onUpdateName, onUpdateAvatar }) => {
 
     return (
         <div className="playMat">
@@ -14,8 +14,11 @@ const PlayMat = ({ players, onAddPlayer, onRemovePlayer, onUpdateScore }) => {
                     id={player.id}
                     name={player.name}
                     initialScore={player.score}
+                    avatarId={player.avatarId}
                     onDelete={() => onRemovePlayer(player.id)}
                     onScoreChange={(newScore) => onUpdateScore(player.id, newScore)}
+                    onNameChange={(newName) => onUpdateName(player.id, newName)}
+                    onAvatarChange={(newAvatarId) => onUpdateAvatar(player.id, newAvatarId)}
                 />
             ))}
 

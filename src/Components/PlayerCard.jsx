@@ -3,12 +3,10 @@ import Button from './Button';
 import PlayerCardMenu from './PlayerCardMenu';
 import AvatarPicker from './AvatarPicker';
 
-const PlayerCard = ({ id, name, initialScore = 0, onDelete, onScoreChange }) => {
+const PlayerCard = ({ id, name, initialScore = 0, avatarId = 1, onDelete, onScoreChange, onNameChange, onAvatarChange }) => {
     const [score, setScore] = useState(initialScore);
     const [isEditing, setIsEditing] = useState(false);
     const [playerName, setPlayerName] = useState(name);
-
-    const [avatarId, setAvatarId] = useState(1);
     const [isPickingAvatar, setIsPickingAvatar] = useState(false);
 
     // Sync local score state when initialScore prop changes
@@ -16,7 +14,12 @@ const PlayerCard = ({ id, name, initialScore = 0, onDelete, onScoreChange }) => 
         setScore(initialScore);
     }, [initialScore]);
 
-    const handleFinishEditing = () => setIsEditing(false);
+    const handleFinishEditing = () => {
+        if (playerName !== name) {
+            onNameChange?.(playerName);
+        }
+        setIsEditing(false);
+    };
 
     const updateScore = (newScore) => {
         setScore(newScore);
@@ -31,7 +34,7 @@ const PlayerCard = ({ id, name, initialScore = 0, onDelete, onScoreChange }) => 
                 /* THE AVATAR PICKER UI */
                 <AvatarPicker
                     onSelectAvatar={(num) => {
-                        setAvatarId(num);
+                        onAvatarChange?.(num);
                         setIsPickingAvatar(false);
                     }}
                     onCancel={() => setIsPickingAvatar(false)}
@@ -46,6 +49,8 @@ const PlayerCard = ({ id, name, initialScore = 0, onDelete, onScoreChange }) => 
                                 src={`/avatars/Icon_${avatarId}.png`}
                                 alt="Current Avatar"
                                 className="current-avatar"
+                                onClick={() => setIsPickingAvatar(true)}
+                                style={{ cursor: 'pointer' }}
                             />
                         </div>
 

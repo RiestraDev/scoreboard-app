@@ -3,8 +3,11 @@ import React, { useState } from "react";
 import HeaderMenu from "./HeaderMenu";
 
 const Header = (props) => {
-    const [headerTitle, setTitle] = useState(props.initialTitle ?? "Hello?");
     const [isEditing, setIsEditing] = useState(false);
+
+    const handleTitleChange = (newTitle) => {
+        props.onHeaderTitleChange(newTitle);
+    };
 
     const handleFinishEditing = () => setIsEditing(false);
 
@@ -14,8 +17,8 @@ const Header = (props) => {
                 <input
                     className="header-title-input"
                     type="text"
-                    value={headerTitle}
-                    onChange={(e) => setTitle(e.target.value)}
+                    value={props.headerTitle}
+                    onChange={(e) => handleTitleChange(e.target.value)}
                     onKeyDown={(e) => {
                         if (e.key === "Enter") handleFinishEditing();
                         if (e.key === "Escape") {
@@ -26,9 +29,15 @@ const Header = (props) => {
                     autoFocus
                 />
             ) : (
-                <h1>{headerTitle}</h1>
+                <h1>{props.headerTitle}</h1>
             )}
-            <HeaderMenu onEditTitle={() => setIsEditing(true)} onResetScores={props.onResetScores} />
+            <HeaderMenu 
+                onEditTitle={() => setIsEditing(true)} 
+                onResetScores={props.onResetScores} 
+                onResetGame={props.onResetGame}
+                onOpenSaveModal={props.onOpenSaveModal}
+                onOpenLoadModal={props.onOpenLoadModal}
+            />
         </div>
     );
 };

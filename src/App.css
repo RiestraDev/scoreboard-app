@@ -179,6 +179,13 @@ body {
   background-color: #444;
 }
 
+.menu-divider {
+  border: none;
+  border-top: 1px solid #555;
+  margin: 4px 0;
+  padding: 0;
+}
+
 .player-name {
   font-size: 1.5rem;
   font-weight: bold;
